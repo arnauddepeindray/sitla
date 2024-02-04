@@ -1,0 +1,33 @@
+<html lang="fr">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <title>Inscription</title>
+</head>
+
+<body>
+    <h3> Une demande d'adhésion vient d'etre envoyé</h3>
+
+    <h3> Coordonée du demandeur</h3>
+    <table class="table table-primary">
+        <thead>
+        <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Prénom</th>
+            <th scope="col">Téléphone</th>
+            <th scope="col">Email</th>
+            <th scope="col">Téléphone</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">{{ user.lastname|upper }}</th>
+            <td>{{ user.firstname|capitalize }}</td>
+            <td>{{ user.phone }}</td>
+            <td>{{ user.email }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h5>Commentaire : {{ user.comment }}</h5>
+</body>
+</html>

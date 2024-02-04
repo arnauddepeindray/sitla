@@ -1,0 +1,21 @@
+{% embed "@templates/emails/base_email.html.twig" %}
+    {% set hostname = 'SITLA 45' %}
+    {% block base_title %}Modification de votre id de connexion{% endif %}{% endblock %}
+    {% block mail_h1 %}{% endblock %}
+    {% block mail_image %}
+        <img alt="" src="https://gallery.mailchimp.com/ea5bae24a1b63287ab8deae04/images/83821452-376b-49d2-9ea0-6a81f226ad6e.jpg" style="max-width:1024px; padding-bottom: 0; display: inline !important; vertical-align: bottom;" class="mcnImage" width="564" align="middle">
+    {% endblock %}
+
+    {% block title_h3 %}Nouveau identifiant:{% endblock %}
+    {% block mail_content %}<br>
+        <p>
+            {{ id }}
+        </p>
+
+        <p>
+            Vous devez à partir de maintenant vous connectez avec cette identifiant, si vous rencontrez une erreur veuillez nous contactez.
+        </p>
+
+    {% endblock %}
+
+{% endembed %}

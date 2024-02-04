@@ -1,0 +1,37 @@
+.row-no-padding > [class*="col-"] {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.box.box-purple {
+  border-top-color: #605ca8;
+}
+
+.box.box-solid.box-purple {
+  border: 1px solid #605ca8;
+}
+
+.box.box-solid.box-purple > .box-header {
+  color: #ffffff;
+  background: #605ca8;
+  background-color: #605ca8;
+}
+.box.box-solid.box-purple > .box-header a,
+.box.box-solid.box-purple > .box-header .btn {
+  color: #ffffff;
+}
+
+.advert-photo-collection-row {
+	background: #eee;
+	padding-bottom: 2em;
+	margin-bottom: 1em;
+}
+
+.vrz-image-multiple {
+    border: 2px dashed rgb(96, 92, 168);
+    text-align: center;
+    min-height: 6em;
+    line-height: 6em;
+    font-size: 2em;
+}
+

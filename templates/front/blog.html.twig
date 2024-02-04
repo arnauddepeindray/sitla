@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Articles SITLA45</title>
+    <link rel="stylesheet" href="{{ asset('css/front/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('fonts/font-awesome.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset("css/front/style.min.css") }}">
+
+</head>
+
+<body>
+<nav class="navbar blog navbar-light navbar-expand-lg fixed-top" id="mainNav">
+    <div class="container"><a class="navbar-brand" href="{{ path('front_member', {"slug": "Accueil"}) }}">SITLA 45</a><button data-toggle="collapse"
+                                                                                      data-target="#navbarResponsive" class="navbar-toggler" aria-controls="navbarResponsive"
+                                                                                      aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item" role="presentation"><a class="nav-link" href="{{ path('front_member', {"slug": "Accueil"}) }}">Accueil</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Categories</a>
+                    <div class="dropdown-menu">
+                        {% for cate in category %}
+                        <a class="dropdown-item" href="{{ path('front_member', {'slug': cate.slug}) }}">{{ cate.title }}</a>
+                        {% endfor %}
+                    </div>
+                </li>
+                <li class="nav-item" role="presentation"><a class="nav-link" href="{{ path('fos_user_profile_show') }}">Profile</a></li>
+                {% if is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_SYNDICAT") %}
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{{ path('sonata_admin_dashboard') }}">Intranet</a> </li>
+                {% endif %}
+                <li class="nav-item" role="presentation"><a class="nav-link" href="{{ path('fos_user_security_logout') }}">Deconnexion</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+{% set image_url =  asset("images/front/home-bg.jpg")%}
+{% if category_find is not null %}
+
+    {% if category_find.photoName is not null %}
+    {% set image_url = vich_uploader_asset(category_find, 'photoFile') %}
+    {% endif %}
+{% endif %}
+<header class="masthead" style="background-image:url({{ image_url }}) ">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-lg-8 mx-auto">
+                <div class="site-heading">
+                    <h1>Services</h1><span class="subheading">Vous trouverez ici les articles qui vous intéresse par
+                            thématique</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container">
+    {% if is_granted("ROLE_SUPER_ADMIN") %}
+        <div class="row">
+            <div class="col-md-3 offset-md-6">
+                <div>
+                    <a class="btn btn-primary d-block mb-2 mb-md-0" target="_blank" href="{{ path("admin_app_articles_list") }}">Modifier des articles</a>
+                </div>
+
+            </div>
+            <div class="col-md-3">
+                    <div>
+                        <a class="btn btn-primary d-block mb-2 mb-md-0" target="_blank" href="{{ path("admin_app_articles_create") }}">Ajouter des articles</a>
+                    </div>
+
+            </div>
+        </div>
+        <hr>
+    {% endif %}
+    <div class="row">
+
+        <div class="col-md-12 col-lg-12">
+            {% for article in articles %}
+            <div class="post-preview">
+                <div class="row">
+                    {% if is_granted("ROLE_SUPER_ADMIN") %}
+                        <div class="col-md-2">
+                            <h6>Action :</h6>
+                            <a target="_blank" class="btn btn-secondary mb-0 mb-md-2 d-md-block" href="{{ path("admin_app_articles_edit", {'id': article.id}) }}">Modifier</a>
+                            <a target="_blank" class="btn btn-danger d-md-block mb-0 mb-md-2"  href="{{ path("admin_app_articles_delete", {'id': article.id}) }}">Supprimer</a>
+                            {% if article.public == false %}
+                                <h6 style="text-decoration: underline">Cette article n'est pas public</h6>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                    <div class="col-md-3 pt-4 pt-md-0"><a href="{{ path('front_article_show', {'slug': article.slug}) }}"> <img class="img-fluid" src="{{ vich_uploader_asset(article, 'photoFile') }} "></a></div>
+                    <div class="col pt-4 pt-md-0">
+                        <a href="{{ path('front_article_show', {'slug': article.slug}) }}">
+                            <h4 class="post-title">{{ article.title }}</h4>
+                            <p class="post-subtitle">{{ article.excerpt }} ...<br>
+                            </p>
+                        </a>
+                        <p class="post-meta">Posté le {{ article.datePost|localizeddate('full', 'none') }}</p>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            {% endfor %}
+
+            {% if articles|length > 9 %}
+                <!-- Pagination -->
+                <div class="template-pagination template-clear-fix">
+                    <ul>
+
+
+                        {% if pagination.page>1 %}
+                            <li class="template-pagination-button-prev"><a href="{{ path(pagination.route,
+                                    pagination.route_params|merge(app.request.query.all)|merge({'page': pagination.page-1})) }}" class="template-icon-meta-arrow-large-rl">&nbsp;</a></li>
+                        {% endif %}
+                        {% for p in range(max(pagination.page-2, 1), min(pagination.page+2, pagination.pages_count)) %}
+
+                            <li><a {% if p == pagination.page %} class="template-pagination-button-selected"{% endif %}
+                                        href="{{ path(pagination.route,pagination.route_params|merge(app.request.query.all)|merge({'page': p }))}}" >{{ p }}</a></li>
+                        {% endfor %}
+                        {% if pagination.page<pagination.pages_count %}
+                            <li class="template-pagination-button-next"><a href="{{ path(pagination.route,
+                                    pagination.route_params|merge(app.request.query.all)|merge({'page': pagination.page+1 })) }}" class="template-icon-meta-arrow-large-rl">&nbsp;</a></li>
+                        {% endif %}
+
+                    </ul>
+                </div>
+
+            {% endif %}
+        </div>
+
+    </div>
+    {% if articles|length > 9 %}
+    <div class="row">
+        <div class="col d-flex justify-content-center">
+            <nav aria-label="...">
+                <ul class="pagination">
+
+                    {% if pagination.page>1 %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="{{ path(pagination.route,
+                                pagination.route_params|merge(app.request.query.all)|merge({'page': pagination.page-1})) }}" tabindex="-1">Previous</a>
+                        </li>
+                    {% endif %}
+
+                    {% for p in range(max(pagination.page-2, 1), min(pagination.page+2, pagination.pages_count)) %}
+
+                        {% if p == pagination.page %}
+                            <li class="page-item active">
+                                <a class="page-link" href="{{ path(pagination.route,pagination.route_params|merge(app.request.query.all)|merge({'page': p }))}}">{{ p }} <span class="sr-only">(current)</span></a>
+                            </li>
+                        {% else %}
+                        <li class="page-item"><a class="page-link" href="{{ path(pagination.route,pagination.route_params|merge(app.request.query.all)|merge({'page': p }))}}">{{ p }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if pagination.page<pagination.pages_count %}
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+    {% endif %}
+</div>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-lg-8 mx-auto">
+                <h6 class="mb-3">Partager sur les réseaux sociaux</h6>
+                <ul class="list-inline text-center">
+                    <li class="list-inline-item"><span class="fa-stack fa-lg"><i
+                                    class="fa fa-circle fa-stack-2x"></i><i
+                                    class="fa fa-twitter fa-stack-1x fa-inverse"></i></span></li>
+                    <li class="list-inline-item"><span class="fa-stack fa-lg"><i
+                                    class="fa fa-circle fa-stack-2x"></i><i
+                                    class="fa fa-facebook fa-stack-1x fa-inverse"></i></span></li>
+                    <li class="list-inline-item"><span class="fa-stack fa-lg"><i
+                                    class="fa fa-circle fa-stack-2x"></i><i
+                                    class="fa fa-github fa-stack-1x fa-inverse"></i></span></li>
+                </ul>
+                <p class="text-muted copyright">Copyright&nbsp;©&nbsp;Syndicat 2019</p>
+            </div>
+        </div>
+    </div>
+</footer>
+<script
+        src="https://code.jquery.com/jquery-3.4.0.min.js"
+        integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src={{ asset("js/front/script.min.js") }}></script>
+</body>
+
+</html>

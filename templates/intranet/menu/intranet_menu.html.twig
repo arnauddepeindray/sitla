@@ -1,0 +1,81 @@
+{% extends 'knp_menu.html.twig' %}
+
+{% block item %}
+    {% import "knp_menu.html.twig" as macros %}
+    {% if item.displayed %}
+        {# building the class of the item #}
+        {%- set classes = item.attribute('class') is not empty ? [item.attribute('class')] : [] %}
+
+        {%- if matcher.isCurrent(item) %}
+            {%- set classes = classes|merge([options.currentClass]) %}
+            {%- set classes = classes|merge(['active']) %}
+
+        {%- elseif matcher.isAncestor(item, options.depth) %}
+            {%- set classes = classes|merge([options.ancestorClass]) %}
+            {%- set classes = classes|merge(['active']) %}
+        {%- endif %}
+
+        {%- if item.actsLikeFirst %}
+            {%- set classes = classes|merge([options.firstClass]) %}
+        {%- endif %}
+        {%- if item.actsLikeLast %}
+            {%- set classes = classes|merge([options.lastClass]) %}
+        {%- endif %}
+        {%- set attributes = item.attributes %}
+        {%- if classes is not empty %}
+            {%- set attributes = attributes|merge({'class': classes|join(' ')}) %}
+        {%- endif %}
+        {# displaying the item #}
+        <li{{ macros.attributes(attributes) }}>
+            {%- if item.uri is not empty and (not item.current or options.currentAsLink) %}
+                {{ block('linkElement') }}
+            {%- else %}
+                {{ block('spanElement') }}
+            {%- endif %}
+
+            {# render the list of children#}
+            {%- set childrenClasses = item.childrenAttribute('class') is not empty ? [item.childrenAttribute('class')] : [] %}
+            {%- set childrenClasses = childrenClasses|merge(['treeview-Menu menu_level_' ~ item.level]) %}
+            {%- set listAttributes = item.childrenAttributes|merge({'class': childrenClasses|join(' ') }) %}
+            {{ block('list') }}
+        </li>
+    {% endif %}
+
+{% endblock %}
+
+{% block linkElement %}
+
+    {% import "knp_menu.html.twig" as macros %}
+
+    <a href="{{ item.uri }}"{{ macros.attributes(item.linkAttributes) }}>
+        {% if item.getExtra('icon', false) %}
+            <i class="{{ item.getExtra('icon')}}"></i>
+        {% endif %}
+        <span>{{ block('label') }}</span>
+        {% if item.getExtra('badge-green', false) %}
+            <span class="pull-right-container">
+                <small class="label pull-right bg-green">{{ item.getExtra('badge-green') }}</small>
+            </span>
+        {% endif %}
+        {% if item.getExtra('badge-new', false) %}
+            <span class="pull-right-container" style="padding-right: 20px;">
+                <small class="label pull-right bg-blue">{{ item.getExtra('badge-new') }}</small>
+            </span>
+        {% endif %}
+        {% if item.getExtra('badge-yellow', false) %}
+            <span class="pull-right-container">
+                <small class="label pull-right bg-yellow">{{ item.getExtra('badge-yellow') }}</small>
+            </span>
+        {% endif %}
+        {% if item.getExtra('badge-blue', false) %}
+            <span class="pull-right-container">
+                <small class="label pull-right bg-blue">{{ item.getExtra('badge-blue') }}</small>
+            </span>
+        {% endif %}
+        {%- if item.hasChildren %}
+            <span class="pull-right-container">
+                <i class="fa pull-right fa-angle-left"></i>
+            </span>
+        {%- endif %}
+    </a>
+{% endblock %}

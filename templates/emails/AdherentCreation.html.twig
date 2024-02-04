@@ -1,0 +1,72 @@
+{% embed "@templates/emails/base_email.html.twig" %}
+    {% set hostname = 'SITLA 45' %}
+    {% block base_title %}Bienvenue sur {{ hostname }}{% endblock %}
+    {% block mail_h1 %}Bonjour {{ user.nomAdherent|capitalize ~ ' ' ~ user.prenomAdherent|upper }}, bienvenue sur {{ hostname }}  !{% endblock %}
+    {% block mail_image %}
+        <img alt="" src="https://gallery.mailchimp.com/ea5bae24a1b63287ab8deae04/images/83821452-376b-49d2-9ea0-6a81f226ad6e.jpg" style="max-width:1024px; padding-bottom: 0; display: inline !important; vertical-align: bottom;" class="mcnImage" width="564" align="middle">
+    {% endblock %}
+
+    {% block title_h3 %}Un compte adhérent vient de vous être créé .{% endblock %}
+    {% block mail_content %}<br>
+        Un mot de passe aléatoire vous a été assigné : <strong>{{ genPass }}</strong><br>
+        Pensez à modifier votre mot de passe en éditant votre profil.<br>
+        <br>
+        Afin de commencer à utiliser votre compte adhérent sur {{ hostname }}, veuillez l'activer en cliquant sur le bouton ci-dessous.<br>
+        <em><span style="font-size:12.8px">Ce lien ne peut être utilisé qu'une seule fois pour valider votre compte.</span></em>
+    {% endblock %}
+
+    {% block mail_button %}
+        <table class="mcnButtonBlock" style="min-width:100%;" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tbody class="mcnButtonBlockOuter">
+            <tr>
+                <td style="padding-top:0; padding-right:18px; padding-bottom:18px; padding-left:18px;" class="mcnButtonBlockInner" valign="top" align="center">
+                    <table class="mcnButtonContentContainer" style="border-collapse: separate ! important;border-radius: 3px;background-color: #00ADD8;" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                        <tr>
+                            <td class="mcnButtonContent" style="font-family: Helvetica; font-size: 18px; padding: 18px;" valign="middle" align="center">
+                                <a class="mcnButton " title="Activer mon compte {{ hostname }}" href="{{ url }}" target="_self" style="font-weight: bold;letter-spacing: -0.5px;line-height: 100%;text-align: center;text-decoration: none;color: #FFFFFF;">Activer mon compte {{ hostname }}</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="mcnTextBlock" style="min-width:100%;" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tbody class="mcnTextBlockOuter">
+            <tr>
+                <td class="mcnTextBlockInner" style="padding-top:9px;" valign="top">
+                    <!--[if mso]>
+                    <table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+                        <tr>
+                    <![endif]-->
+
+                    <!--[if mso]>
+                    <td valign="top" width="600" style="width:600px;">
+                    <![endif]-->
+                    <table style="max-width:100%; min-width:100%;" class="mcnTextContentContainer" width="100%" border="0" cellspacing="0" cellpadding="0" align="left">
+                        <tbody><tr>
+
+                            <td class="mcnTextContent" style="padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;" valign="top">
+
+                                Si vous ne pouvez pas cliquer sur le bouton au-dessus, veuillez copier-coller le lien suivant dans votre navigateur :<br>
+                                {{ url }}
+                            </td>
+                        </tr>
+                        </tbody></table>
+                    <!--[if mso]>
+                    </td>
+                    <![endif]-->
+
+                    <!--[if mso]>
+                    </tr>
+                    </table>
+                    <![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    {% endblock %}
+
+{% endembed %}

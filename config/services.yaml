@@ -1,0 +1,156 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: 'fr'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+    App\Form\FormulaireMontanPaiementType:
+        arguments: ['@doctrine.orm.entity_manager']
+        tags: [form.type]
+
+    #Service Menu builder customisation
+    intranet.menu_builder:
+        class: App\Controller\intranet\Menu\MenuBuilder
+        arguments: ["@knp_menu.factory"]
+        calls:
+            - [ setAuthChecker, ['@security.authorization_checker']]
+            - [ setTokenStorage, ['@security.token_storage']]
+        tags:
+            - { name: knp_menu.menu_builder, method: createMainMenu, alias: main_menu } # the previous menu
+
+    intranet.users:
+        class: App\Admin\UsersAdmin
+        arguments: [~, App\Entity\Users, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Users }
+        public: true
+
+    intranet.tresorie_don:
+        class: App\Admin\DonAdmin
+        arguments: [~, App\Entity\Don, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Don }
+        public: true
+
+    intranet.tresorie_timbre:
+        class: App\Admin\TimbreAdmin
+        arguments: [~, App\Entity\Timbre, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Timbre }
+        public: true
+
+    intranet.tresorie_paiement:
+        class: App\Admin\PaiementAdmin
+        arguments: [~, App\Entity\Paiement, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Paiement }
+        public: true
+
+    intranet.entreprise:
+        class: App\Admin\EntrepriseAdmin
+        arguments: [~, App\Entity\Entreprise, App\Controller\intranet\Adherent\AdherentAdminController]
+        calls:
+            - [ setAuthChecker, ['@security.authorization_checker']]
+            - [ setTokenStorage, ['@security.token_storage']]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Entreprise }
+        public: true
+
+    sonata.admin.exporter:
+        class: App\Controller\intranet\Exporter\Exporter
+        calls:
+            - [setKnpSnappyPdf, ["@knp_snappy.pdf"]]
+            - [setTemplateEngine, ["@templating"]]
+        public: true
+
+    intranet.login_listener:
+        # path of the previously created class
+        class:  App\Controller\intranet\Listeners\LoginListener
+        arguments:
+            $userManager: "@fos_user.user_manager"
+            $router: "@router"
+        tags:
+            - { name: kernel.event_listener, event: security.interactive_login, method: onSecurityInteractiveLogin }
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+        calls:
+            - [ setAuthChecker, ['@security.authorization_checker']]
+
+    intranet.category_article:
+        class: App\Admin\CategoryArticleAdmin
+        arguments: [~, App\Entity\CategoryArticle, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: CategoryArticle }
+        public: true
+
+    intranet.articles:
+        class: App\Admin\ArticlesAdmin
+        arguments: [~, App\Entity\Articles, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Articles }
+        calls:
+            - [setTemplate, [edit, 'intranet/articles/edit.html.twig']]
+        public: true
+
+    intranet.article_contents:
+        class: App\Admin\ArticleContentsAdmin
+        arguments: [~, App\Entity\ArticleContents, App\Controller\intranet\Articles\ArticleAdminController]
+        tags:
+            - { name: sonata.admin, pager_type: "simple", manager_type: orm, group: admin, label: ArticleContents }
+        calls:
+            - [setTemplate, [edit, 'intranet/articles/edit.html.twig']]
+        public: true
+
+    fos_user.util.token_generator:
+        alias: 'fos_user.util.token_generator.default'
+        public: true
+    FOS\UserBundle\Form\Factory\FactoryInterface:
+        alias: 'fos_user.registration.form.factory'
+        public: true
+
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }
+
+sonata_block:
+    default_contexts: [cms]
+    blocks:
+        # enable the SonataAdminBundle block
+        sonata.admin.block.admin_list:
+            contexts: [admin]
+
+
+
+sonata_admin:
+    options:
+        html5_validate:    true     # enable or disable html5 form validation
+        confirm_exit:      true     # enable or disable a confirmation before navigating away
+        use_select2:       true     # enable or disable usage of the Select2 jQuery library
+        use_icheck:        true     # enable or disable usage of the iCheck library
+        use_bootlint:      false    # enable or disable usage of Bootlint
+        use_stickyforms:   true     # enable or disable the floating buttons
+        form_type:         standard # can also be 'horizontal'
+
+

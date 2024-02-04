@@ -1,0 +1,23 @@
+
+{% block user_block %}
+	{% set user = app.user%}
+	<li class="user-header" style="height: auto; background-color: #3290b2;">
+		{# <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"> #}
+		<p>
+			{{ app.user }}
+			<small>{{  is_granted('ROLE_SUPER_ADMIN') == true ? 'Responsable' : 'Membre'}}</small>
+		</p>
+	</li>
+{# 	<li class="user-body">
+	</li> #}
+	<li class="user-footer" style="background-color: #0e4f64;">
+		<div class="pull-left">
+			<a href="{{ path('fos_user_profile_show') }}" class="btn btn-default btn-flat btn-success" style="color: #fff;" target="_blank"><i class="fa fa-user"></i> Profil</a>
+		</div>
+		<div class="pull-right">
+				<a class="btn btn-default btn-flat btn-danger" href="{{ path('fos_user_security_logout') }}" style="color: #fff;"><i class="fa fa-sign-out"></i> Déconnexion</a>
+		</div>
+
+	</li>
+
+{% endblock %}

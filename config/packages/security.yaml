@@ -1,0 +1,73 @@
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: bcrypt
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username
+
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
+        ROLE_SYNDICAT:
+            - ROLE_USER
+            - ROLE_TRESORIER
+
+        ROLE_TRESORIER:
+            - ROLE_TRESORIER_DON
+            - ROLE_TRESORIER_PAIEMENT
+            - ROLE_TRESORIER_TIMBRE
+            - ROLE_ADMIN_ADHERENT
+
+        ROLE_TRESORIER_DON:
+            - ROLE_INTRANET_TRESORIE_DON_LIST
+            - ROLE_INTRANET_TRESORIE_DON_EDIT
+            - ROLE_INTRANET_TRESORIE_DON_VIEW
+            - ROLE_INTRANET_TRESORIE_DON_CREATE
+            - ROLE_INTRANET_TRESORIE_DON_DELETE
+
+        ROLE_TRESORIER_PAIEMENT:
+            - ROLE_INTRANET_TRESORIE_PAIEMENT_LIST
+            - ROLE_INTRANET_TRESORIE_PAIEMENT_EDIT
+            - ROLE_INTRANET_TRESORIE_PAIEMENT_VIEW
+            - ROLE_INTRANET_TRESORIE_PAIEMENT_CREATE
+            - ROLE_INTRANET_TRESORIE_PAIEMENT_DELETE
+
+        ROLE_TRESORIER_TIMBRE:
+            - ROLE_INTRANET_TRESORIE_TIMBRE_LIST
+            - ROLE_INTRANET_TRESORIE_TIMBRE_EDIT
+            - ROLE_INTRANET_TRESORIE_TIMBRE_VIEW
+            - ROLE_INTRANET_TRESORIE_TIMBRE_CREATE
+            - ROLE_INTRANET_TRESORIE_TIMBRE_DELETE
+
+        ROLE_ADMIN_ADHERENT:
+            - ROLE_INTRANET_ENTREPRISE_LIST
+            - ROLE_INTRANET_ENTREPRISE_EDIT
+            - ROLE_INTRANET_ENTREPRISE_VIEW
+            - ROLE_INTRANET_ENTREPRISE_CREATE
+            - ROLE_INTRANET_ENTREPRISE_DELETE
+
+
+        # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            pattern: ^/
+            form_login:
+                provider: fos_userbundle
+                csrf_token_generator: security.csrf.token_manager
+
+            logout:       true
+            anonymous:    true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/intranet/, role: [ROLE_ADMIN, ROLE_SYNDICAT] }
+        - { path: ^/sitla45/, role: [ROLE_USER] }
+        - { path: ^/, role: [IS_AUTHENTICATED_ANONYMOUSLY, ROLE_USER] }

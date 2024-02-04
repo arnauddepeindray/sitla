@@ -1,0 +1,147 @@
+
+{#{{ dump(object) }}#}
+
+{% if object.parent is null %}
+<a href="#" onclick="toDo('create', this)" class="btn btn-sm btn-warning" data-id="{{ object.id }}">
+	<i class="fa fa-edit" aria-hidden="true"></i> Créer compte utilisateur
+</a>
+{% else %}
+
+	{% if object.parent.enabled == true %}
+	<a href="{{ path("admin_app_entreprise_unableUser", {'id': object.id}) }}" class="btn btn-sm btn-danger" data-id="{{ object.id }}">
+		<i class="fa fa-edit" aria-hidden="true"></i> Desactiver compte utilisateur
+	</a>
+	{% else %}
+		<a href="{{ path('admin_app_entreprise_enableUser', {'id': object.id}) }}" onclick="toDo('enable', this)" class="btn btn-sm btn-danger" data-id="{{ object.id }}">
+			<i class="fa fa-edit" aria-hidden="true"></i> Activer compte utilisateur
+		</a>
+	{% endif %}
+
+{% endif %}
+
+{% if admin.isGranted('EDIT', object) and admin.hasRoute('edit')%}
+		<a href="{{ path('admin_app_entreprise_edit', {'id': object.id }) }}" class="btn btn-sm btn-success">
+			<i class="fa fa-edit" aria-hidden="true"></i> Modifier
+		</a>
+{% endif %}
+
+{#{% if object.enabled %}
+	<a href="{{ admin.generateObjectUrl('deactive', object) }}" class="btn btn-sm btn-danger delete_link" title="{{ 'action_delete'|trans({}, 'SonataAdminBundle') }}">
+		<i class="fa fa-times" aria-hidden="true"></i> Désactiver
+	</a>
+{% else %}
+	<a href="{{ admin.generateObjectUrl('active', object) }}" class="btn btn-sm btn-warning" title="{{ 'action_delete'|trans({}, 'SonataAdminBundle') }}">
+		<i class="fa fa-refresh" aria-hidden="true"></i> Réactiver
+	</a>
+{% endif %}#}
+
+<a href="{{ path('admin_app_entreprise_delete', {'id': object.id }) }}" class="btn btn-sm btn-danger">
+		<i class="fa fa-trash" aria-hidden="true"></i> Supprimer
+</a>
+
+<style>
+	.error {
+		color: red;
+	}
+</style>
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form id="createUserForm" method="post">
+			<div class="modal-body">
+
+					<label for="username">Nom d'utilisateur</label>
+					<input type="text" name="username" id="username">
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="submit" class="btn btn-primary">Valider</button>
+			</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div id="modal_createUser" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
+				<h4 id="modalTitle" class="modal-title">Création du compte utilisateur</h4>
+			</div>
+			<form id="createUserForm">
+			<div id="modalBody" class="modal-body">
+				<div class="alert alert-danger hidden" id="box_error">
+					<span class="closebtn" style="cursor: pointer" onclick="this.parentElement.style.display='none';">&times;</span>
+					<span id="error_msg"></span>
+				</div>
+				<label for="username">Numéro d'adhérent* :</label>
+				<input type="text" name="username" id="numero_adherent" class="form-control" required >
+				<input type="hidden" name="adherent_id" id="adherent_id">
+
+				<label for="username">Email* :</label>
+				<input type="text" name="email" id="email" class="form-control" required >
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button class="btn btn-primary" type="button" onclick="createUser()">Valider</button>
+			</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js" integrity="sha256-sPB0F50YUDK0otDnsfNHawYmA5M0pjjUf4TvRJkGFrI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.min.js" integrity="sha256-vb+6VObiUIaoRuSusdLRWtXs/ewuz62LgVXg2f1ZXGo=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/localization/messages_fr.min.js" integrity="sha256-S3JqDKzFk/ubOibmpSkRy5ublbmS7ptnNCbh4n46jz4=" crossorigin="anonymous"></script>
+<script>
+	function toDo(action, link) {
+
+		if(action === "create"){
+			$('#modal_createUser').modal('show');
+			$('#adherent_id').val(link.getAttribute("data-id"));
+		}
+	}
+
+	function createUser() {
+
+		let username = $('#numero_adherent').val();
+
+		if(username === "")
+			$('#createUserForm').valid();
+		else{
+			let data = $('#createUserForm').serialize();
+			$.ajax({
+				url: "{{ path('admin_app_entreprise_createUser') }}",
+				dataType: 'json',
+				type:'post',
+				data: data,
+
+				success: function (response) {
+					let box_error=  document.getElementById("box_error");
+					if(!box_error.classList.contains("hidden"))
+						box_error.classList.add("hidden");
+
+					$('#createUserForm').modal('hide');
+					document.location.reload();
+
+				},
+
+				error: function (response) {
+					let box_error=  document.getElementById("box_error");
+					if(box_error.classList.contains("hidden"))
+						box_error.classList.remove("hidden");
+					$('#error_msg').text(response.responseJSON.error)
+				}
+			})
+		}
+
+	}
+</script>

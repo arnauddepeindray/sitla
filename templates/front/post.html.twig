@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>SITLA45 - {{ article.title }}</title>
+    <link rel="stylesheet" href="{{ asset('css/front/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('fonts/font-awesome.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset("css/front/style.min.css") }}">
+</head>
+
+<body>
+    <nav class="navbar blog navbar-light navbar-expand-lg fixed-top" id="mainNav">
+        <div class="container"><a class="navbar-brand" href="{{ path('front_member', {"slug": "Accueil"}) }}">SITLA 45</a><button data-toggle="collapse"
+                                                                                                                               data-target="#navbarResponsive" class="navbar-toggler" aria-controls="navbarResponsive"
+                                                                                                                               aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{{ path('front_member', {"slug": "Accueil"}) }}">Accueil</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Categories</a>
+                        <div class="dropdown-menu">
+                            {% for cate in category %}
+                                <a class="dropdown-item" href="{{ path('front_member', {'slug': cate.slug}) }}">{{ cate.title }}</a>
+                            {% endfor %}
+                        </div>
+                    </li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{{ path('fos_user_profile_show') }}">Profile</a></li>
+                     {% if is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_SYNDICAT") %}
+                        <li class="nav-item" role="presentation"><a class="nav-link" href="{{ path('sonata_admin_dashboard') }}">Intranet</a> </li>
+                    {% endif %}
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{{ path('fos_user_security_logout') }}">Deconnexion</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <header class="masthead" style="background-image: url({{ vich_uploader_asset(article, 'photoFile') }});">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-lg-8 mx-auto">
+                    <div class="post-heading">
+                        <h1>{{ article.title }}</h1>
+                        <h2 class="subheading">{{ article.excerpt }}<br></h2><span class="meta">Posté le {{ article.datePost|localizeddate('full', 'none') }}</span></div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <article>
+        <div class="container">
+            {% if is_granted("ROLE_SUPER_ADMIN") %}
+                <div class="d-flex justify-content-md-end justify-content-center">
+                    <a class="btn btn-primary mr-4" target="_blank" href="{{ path("admin_app_articlecontents_edit", {'id': content[0].id}) }}">Modifier</a>
+                    <a class="btn btn-danger" target="_blank" href="{{ path("admin_app_articlecontents_delete", {'id': content[0].id}) }}">Supprimer</a>
+                </div>
+                <hr>
+            {% endif %}
+            <div class="row">
+                <div class="col-md-10 col-lg-8 mx-auto">
+                    {% for cont in content %}
+                        {% if cont.articlePhotos.position == "debut" and cont.articlePhotos.photoName|length > 0%}
+                            <a href="#"><img class="img-fluid" src="{{ vich_uploader_asset(cont.articlePhotos, 'photoFile') }}"></a>
+                            {% if cont.articlePhotos.descriptionImage is not null %}
+                                <span class="caption text-muted">{{ cont.articlePhotos.descriptionImage }}<br></span>
+                            {% endif %}
+                        {% endif %}
+                        {{ cont.content|raw }}
+
+                        {% if cont.articlePhotos.position == "fin" and cont.articlePhotos.photoName|length > 0%}
+                            <a href="#"><img class="img-fluid" src="{{ vich_uploader_asset(cont.articlePhotos, 'photoFile') }}"></a>
+                            {% if cont.articlePhotos.descriptionImage is not null %}
+                                <span class="caption text-muted">{{ cont.articlePhotos.descriptionImage }}<br></span>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </article>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-lg-8 mx-auto">
+                    <h6 class="mb-3">Partager sur les réseaux sociaux</h6>
+                    <ul class="list-inline text-center">
+                        <li class="list-inline-item"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-twitter fa-stack-1x fa-inverse"></i></span></li>
+                        <li class="list-inline-item"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-facebook fa-stack-1x fa-inverse"></i></span></li>
+                        <li class="list-inline-item"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-github fa-stack-1x fa-inverse"></i></span></li>
+                    </ul>
+                    <p class="text-muted copyright">Copyright&nbsp;©&nbsp;Syndicat 2019</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script
+            src="https://code.jquery.com/jquery-3.4.0.min.js"
+            integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src={{ asset("js/front/script.min.js") }}></script>
+</body>
+
+</html>

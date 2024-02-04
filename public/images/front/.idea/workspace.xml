@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="fbf0362d-86de-4580-93b8-e06b33b31f7e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../../.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../composer.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/../../../config/bundles.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../config/packages/dev/swiftmailer.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../config/packages/dev/swiftmailer.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../config/packages/fos_user.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../config/packages/fos_user.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../config/packages/prod/monolog.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../config/packages/prod/monolog.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/box_img3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/romain.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sliders/slider-1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sliders/slider-2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sliders/slider-3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sliders/slider-4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sliders/slider-5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sliders/slider-6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../src/Controller/front/FrontController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../../../src/Controller/front/FrontController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../src/Controller/intranet/Adherent/AdherentAdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../../../src/Controller/intranet/Adherent/AdherentAdminController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../src/Controller/intranet/Menu/MenuBuilder.php" beforeDir="false" afterPath="$PROJECT_DIR$/../../../src/Controller/intranet/Menu/MenuBuilder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../src/Entity/Entreprise.php" beforeDir="false" afterPath="$PROJECT_DIR$/../../../src/Entity/Entreprise.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../src/Entity/Users.php" beforeDir="false" afterPath="$PROJECT_DIR$/../../../src/Entity/Users.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../../../symfony.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/../../../templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../templates/bundles/FOSUserBundle/ChangePassword/change_password_content.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/../../../templates/bundles/FOSUserBundle/ChangePassword/change_password_content.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../templates/bundles/FOSUserBundle/Profile/edit_content.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/../../../templates/bundles/FOSUserBundle/Profile/edit_content.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../templates/bundles/FOSUserBundle/Profile/show_content.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/../../../templates/bundles/FOSUserBundle/Profile/show_content.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../templates/bundles/FOSUserBundle/Resetting/request_content.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/../../../templates/bundles/FOSUserBundle/Resetting/request_content.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../templates/bundles/FOSUserBundle/Security/login.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/../../../templates/bundles/FOSUserBundle/Security/login.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../templates/emails/AdherentCreation.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/../../../templates/emails/AdherentCreation.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../templates/emails/base_email.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/../../../templates/emails/base_email.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../templates/emails/modifyUsername.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/../../../templates/emails/modifyUsername.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../templates/emails/registration.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/../../../templates/emails/registration.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../templates/front/blog.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/../../../templates/front/blog.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../templates/front/homepage.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/../../../templates/front/homepage.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../templates/front/layout.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/../../../templates/front/layout.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../templates/front/post.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/../../../templates/front/post.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../templates/front/register.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/../../../templates/front/register.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../templates/intranet/sonata/standard_layout.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/../../../templates/intranet/sonata/standard_layout.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../templates/intranet/users/list__actions.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/../../../templates/intranet/users/list__actions.html.twig" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution>
+      <executable />
+    </execution>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="ProjectId" id="1e61nWuHmTeFDQegyEa0CXSpd1E" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fbf0362d-86de-4580-93b8-e06b33b31f7e" name="Default Changelist" comment="" />
+      <created>1593627395866</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1593627395866</updated>
+      <workItem from="1593627397056" duration="10000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

@@ -1,0 +1,25 @@
+# config/packages/sonata_admin.yaml
+sonata_admin:
+    title: 'FO 45'
+    dashboard:
+        groups:
+            menu:
+                provider: 'main_menu'
+
+    templates:
+        layout: '@templates/intranet/sonata/standard_layout.html.twig'
+        user_block: '@templates/intranet/sonata/core/user_block.html.twig'
+        knp_menu_template: '@templates/intranet/menu/intranet_menu.html.twig'
+
+    security:
+        handler: sonata.admin.security.handler.role
+
+    assets:
+        extra_stylesheets:
+            - bundles/sonatatranslation/css/sonata-translation.css
+
+
+sonata_block:
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts: [admin]

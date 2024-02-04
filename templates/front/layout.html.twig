@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'FOSUserBundle' %}
+{% block stylesheets %}
+{{ parent() }}
+
+    <link rel="stylesheet" href="{{ asset("fonts/font-awesome.min.css") }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500">
+    <link rel="stylesheet" href="{{ asset('css/front/login.css') }}">
+{% endblock %}
+
+
+{% block body %}
+
+    {% block content %}
+    {% endblock %}
+
+    <footer class="pt-3 d-flex justify-content-center align-items-center text-light bg-color-1">
+        <p><a class="text-white" href="#">SITLA 45 Tout droit réserver @arnaud.depeindray<br></a></p>
+    </footer>
+{% endblock %}
+
+
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}

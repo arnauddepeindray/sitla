@@ -1,0 +1,17 @@
+<html lang="fr">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <title>Contact</title>
+</head>
+
+<body>
+    <h3> Un message vient d'etre envoyé</h3>
+
+    <h4>Nom : {{ contact.nom|upper }} </h4>
+    <h4>Email : {{ contact.email }} </h4>
+
+    <h4>Message :</h4>
+    <h3>{{ contact.message }}</h3>
+
+</body>
+</html>
