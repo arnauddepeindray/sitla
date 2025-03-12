@@ -165,6 +165,20 @@
     "phpdocumentor/type-resolver": {
         "version": "0.4.0"
     },
+    "phpunit/phpunit": {
+        "version": "9.6",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "9.6",
+            "ref": "6a9341aa97d441627f8bd424ae85dc04c944f8b4"
+        },
+        "files": [
+            ".env.test",
+            "phpunit.xml.dist",
+            "tests/bootstrap.php"
+        ]
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
@@ -239,6 +253,18 @@
     "sonata-project/exporter": {
         "version": "2.0.1"
     },
+    "sonata-project/translation-bundle": {
+        "version": "2.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "2.3",
+            "ref": "65f0e544ca19d262268e1f1ce2b4cbbe459a4a97"
+        },
+        "files": [
+            "config/packages/sonata_translation.yaml"
+        ]
+    },
     "stof/doctrine-extensions-bundle": {
         "version": "1.2",
         "recipe": {
@@ -311,9 +337,6 @@
         "files": [
             "./config/packages/dev/debug.yaml"
         ]
-    },
-    "symfony/debug-pack": {
-        "version": "v1.0.7"
     },
     "symfony/dependency-injection": {
         "version": "v4.2.3"
@@ -414,9 +437,6 @@
     "symfony/options-resolver": {
         "version": "v4.2.3"
     },
-    "symfony/orm-pack": {
-        "version": "v1.0.6"
-    },
     "symfony/phpunit-bridge": {
         "version": "4.1",
         "recipe": {
@@ -447,9 +467,6 @@
     },
     "symfony/process": {
         "version": "v4.2.3"
-    },
-    "symfony/profiler-pack": {
-        "version": "v1.0.4"
     },
     "symfony/property-access": {
         "version": "v4.2.3"
@@ -502,9 +519,6 @@
     "symfony/serializer": {
         "version": "v4.2.3"
     },
-    "symfony/serializer-pack": {
-        "version": "v1.0.2"
-    },
     "symfony/stopwatch": {
         "version": "v4.2.3"
     },
@@ -524,9 +538,6 @@
     },
     "symfony/templating": {
         "version": "v4.2.7"
-    },
-    "symfony/test-pack": {
-        "version": "v1.0.5"
     },
     "symfony/translation": {
         "version": "3.3",
